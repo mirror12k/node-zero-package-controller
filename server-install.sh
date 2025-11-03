@@ -33,6 +33,7 @@ clone_if_missing() {
 }
 
 clone_if_missing "https://github.com/mirror12k/deployable-invidious-package"
+clone_if_missing "https://github.com/mirror12k/deployable-materialious-package"
 clone_if_missing "https://github.com/mirror12k/deployable-jellyfin-package"
 
 add_cron_line "0 0	* * *	root	/sbin/reboot"
