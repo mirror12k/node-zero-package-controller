@@ -36,10 +36,11 @@ clone_if_missing "https://github.com/mirror12k/deployable-invidious-package"
 clone_if_missing "https://github.com/mirror12k/deployable-materialious-package"
 clone_if_missing "https://github.com/mirror12k/deployable-jellyfin-package"
 clone_if_missing "https://github.com/mirror12k/deployable-caddy-proxy-package"
+clone_if_missing "https://github.com/mirror12k/deployable-shinobi-package"
 
 # Initialize empty envfiles for all packages
 echo "Initializing envfiles..."
-for package in invidious materialious jellyfin caddy; do
+for package in invidious materialious jellyfin caddy shinobi; do
     envfile=".envfile.$package"
     if [ ! -f "$envfile" ]; then
         touch "$envfile"

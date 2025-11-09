@@ -53,4 +53,5 @@ run_package "$SERVER_ROOT/deployable-invidious-package" "invd_runner" "invidious
 run_package "$SERVER_ROOT/deployable-materialious-package" "matl_runner" "materialious"
 run_package "$SERVER_ROOT/deployable-jellyfin-package" "jell_runner" "jellyfin"
 run_package "$SERVER_ROOT/deployable-caddy-proxy-package" "caddy_runner" "caddy"
+run_package "$SERVER_ROOT/deployable-shinobi-package" "shinobi_runner" "shinobi"
 
