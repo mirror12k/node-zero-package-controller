@@ -30,13 +30,18 @@ run_package() {
         echo "Created empty envfile: $ENVFILE"
     fi
 
-    # Run docker command directly
+    # Ensure log directory exists
+    local LOG_DIR=$(dirname "$LOG_FILE")
+    mkdir -p "$LOG_DIR"
+
+    # Run docker command directly with input/output redirection
     docker run --privileged --name "${PACKAGE_NAME}-container" --rm \
         --env-file "$ENVFILE" \
         -v "$(pwd)/${PACKAGE_NAME}:/app:ro" \
         -v "/${PACKAGE_NAME}:/${PACKAGE_NAME}" \
         -v /var/run/docker.sock:/var/run/docker.sock \
-        -w "/app" -i docker:cli "sh" "/app/run.sh"
+        -w "/app" -i docker:cli "sh" "/app/run.sh" \
+        < "$INPUT_PIPE" >> "$LOG_FILE" 2>&1
 
     echo "Package ${PACKAGE_NAME} started successfully!"
 }
