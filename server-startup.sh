@@ -14,7 +14,7 @@ run_package() {
 
     echo "🚀 Starting ${PACKAGE_DIR} as ${USER}..."
     echo "----------------------------------------------"
-    echo "Working directory: ${SERVER_ROOT}/${PACKAGE_DIR}"
+    echo "Working directory: ${PACKAGE_DIR}"
     echo "Log file:          ${LOG_FILE}"
     echo "Input pipe:        ${INPUT_PIPE}"
     echo "Environment file:  ${ENVFILE}"
@@ -34,16 +34,19 @@ run_package() {
     local LOG_DIR=$(dirname "$LOG_FILE")
     mkdir -p "$LOG_DIR"
 
-    # Run docker command directly with input/output redirection
-    docker run --privileged --name "${PACKAGE_NAME}-container" --rm \
+    # Run docker command in background (daemonized) with input/output redirection
+    nohup docker run --privileged --name "${PACKAGE_NAME}-container" --rm \
         --env-file "$ENVFILE" \
         -v "$(pwd)/${PACKAGE_NAME}:/app:ro" \
         -v "/${PACKAGE_NAME}:/${PACKAGE_NAME}" \
         -v /var/run/docker.sock:/var/run/docker.sock \
         -w "/app" -i docker:cli "sh" "/app/run.sh" \
-        < "$INPUT_PIPE" >> "$LOG_FILE" 2>&1
+        < "$INPUT_PIPE" >> "$LOG_FILE" 2>&1 &
 
-    echo "Package ${PACKAGE_NAME} started successfully!"
+    local DOCKER_PID=$!
+    echo "Package ${PACKAGE_NAME} started in background (PID: $DOCKER_PID)"
+
+    cd "${SERVER_ROOT}"
 }
 
 run_package "$SERVER_ROOT/deployable-invidious-package" "invd_runner" "invidious"
