@@ -36,6 +36,18 @@ clone_if_missing "https://github.com/mirror12k/deployable-invidious-package"
 clone_if_missing "https://github.com/mirror12k/deployable-materialious-package"
 clone_if_missing "https://github.com/mirror12k/deployable-jellyfin-package"
 
+# Initialize empty envfiles for all packages
+echo "Initializing envfiles..."
+for package in invidious materialious jellyfin; do
+    envfile=".envfile.$package"
+    if [ ! -f "$envfile" ]; then
+        touch "$envfile"
+        echo "Created: $envfile"
+    else
+        echo "Already exists: $envfile"
+    fi
+done
+
 add_cron_line "0 0	* * *	root	/sbin/reboot"
 add_cron_line "@reboot root $PWD/server-start.sh"
 
