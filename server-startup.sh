@@ -54,4 +54,5 @@ run_package "$SERVER_ROOT/deployable-materialious-package" "matl_runner" "materi
 run_package "$SERVER_ROOT/deployable-jellyfin-package" "jell_runner" "jellyfin"
 run_package "$SERVER_ROOT/deployable-caddy-proxy-package" "caddy_runner" "caddy"
 run_package "$SERVER_ROOT/deployable-shinobi-package" "shinobi_runner" "shinobi"
+run_package "$SERVER_ROOT/deployable-n8n-package" "n8n_runner" "n8n"
 
