@@ -52,7 +52,7 @@ for package in invidious materialious jellyfin caddy shinobi n8n openssh; do
     fi
 done
 
-add_cron_line "0 0	* * *	root	/sbin/reboot"
+add_cron_line "0 6	* * *	root	/sbin/reboot"
 add_cron_line "@reboot root $PWD/server-start.sh"
 
 echo "Install complete."
